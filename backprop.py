@@ -92,10 +92,11 @@ def train_model(model, train_ys, train_xs, dev_ys, dev_xs, test_ys, test_xs, tli
         daccuracy = test_accuracy(model, dev_ys, dev_xs)
         dlist[iteration] = daccuracy
         
-        accuracy_new = daccuracy
-        if np.abs(accuracy_new - accuracy_old) < 0.001:
-            break
-        accuracy_old = accuracy_new
+        if not args.nodev:
+            accuracy_new = daccuracy
+            if np.abs(accuracy_new - accuracy_old) < 0.001:
+                break
+            accuracy_old = accuracy_new
 
     return model
 
