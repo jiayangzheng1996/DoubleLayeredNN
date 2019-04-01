@@ -1,15 +1,15 @@
 import numpy as np
 from io import StringIO
 
-NUM_FEATURES = 0
-DATA_PATH = ""
+NUM_FEATURES = 0 #this variable determines the number of input units in the network
+DATA_PATH = "" #put the data file here
 
 #returns the label and feature value vector for one datapoint (represented as a line (string) from the data file)
 def parse_line(line):
     tokens = line.split()
     x = np.zeros(NUM_FEATURES)
     y = int(tokens[0])
-    y = max(y,0) #treat -1 as 0 instead, because sigmoid's range is 0-1
+    y = max(y,0) #treat -1 as 0 instead, because sigmoid's range is 0-1. this does not matter if your label is 0 and 1.
     for t in tokens[1:]:
         parts = t.split(':')
         feature = int(parts[0])
@@ -87,11 +87,13 @@ def train_model(model, train_ys, train_xs, dev_ys, dev_xs, test_ys, test_xs, tli
 
         model = (w1, w2)
 
+        #plot variable
         taccuracy = test_accuracy(model, test_ys, test_xs)
         tlist[iteration] = taccuracy
         daccuracy = test_accuracy(model, dev_ys, dev_xs)
         dlist[iteration] = daccuracy
         
+        #convergence check
         if not args.nodev:
             accuracy_new = daccuracy
             if np.abs(accuracy_new - accuracy_old) < 0.001:
@@ -183,6 +185,8 @@ def main():
         with StringIO() as weights_string_2:
             np.savetxt(weights_string_2,w2)
             print('Output layer weights: {}'.format(weights_string_2.getvalue()))
+    
+    #plotting graph
     import matplotlib.pyplot as plt
     import matplotlib.patches as patch
     plt.plot(tlist, color='blue')
