@@ -193,7 +193,7 @@ def main():
     plt.plot(dlist, color='green')
     test_patch = patch.Patch(color='blue', label='test data')
     development_patch = patch.Patch(color='green', label='development data')
-    plt.title('NeuralNetwork')
+    plt.title('NeuralNetwork with %s Hidden unit'%args.hidden_dim)
     plt.ylabel('Accuracy')
     plt.xlabel('Num of iteration')
     plt.xlim(left=1)
